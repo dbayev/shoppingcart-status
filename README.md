@@ -25,7 +25,6 @@ valid fallback — use the `raw.githubusercontent.com` one above.)
   "state": "ok",
   "updatedAt": "2026-11-15T00:00:00Z",
   "until": null,
-  "message": { "en": "Scheduled maintenance, back by 3:30 AM PT", "ru": "…" },
   "minAppVersion": { "android": "1.0.0", "ios": "1.0.0" }
 }
 ```
@@ -33,11 +32,10 @@ valid fallback — use the `raw.githubusercontent.com` one above.)
 | Field | Type | Rules |
 |---|---|---|
 | `schema` | int | Currently `1`. Clients ignore unknown fields. If `schema` is higher than a client supports, it uses only `state` and `minAppVersion` when parseable; otherwise treats the file as unavailable. |
-| `state` | `"ok"` \| `"maintenance"` \| `"outage"` | Any unknown value is treated as `"ok"`. |
+| `state` | `"ok"` \| `"maintenance"` \| `"outage"` | Any unknown value is treated as `"ok"`. The app turns the state into its **own** localized banner text (all supported languages) — there is **no `message` field**. |
 | `updatedAt` | ISO-8601 UTC | Informational. |
 | `until` | ISO-8601 UTC or `null` | Expected end; rendered in the device's local time when present. |
-| `message` | object keyed by language code | Client picks the device language, falls back to `en`, then to a built-in default. Plain text, ~200 chars max. |
-| `minAppVersion` | object per platform (semver) | If the installed version is lower → the app shows a blocking "Update required" screen with a store link. Missing/invalid → no enforcement. |
+| `minAppVersion` | object per platform (semver) | The **off-box mirror** of the force-update floor. The app's primary source is the in-band `app_config.MIN_APP_VERSION_*` it reads from the API; this file is consulted when the API is unreachable. If the installed version is lower → the app shows a blocking "Update required" screen with a store link. Missing/invalid → no enforcement. **A mandatory bump means setting *both* the `app_config` floor and this mirror.** |
 
 A filled-in maintenance example is in `status.example.maintenance.json`.
 
@@ -51,8 +49,9 @@ Edit `status.json` on `main` (GitHub web/app/`git`). Caching caveats:
   late is harmless — the file never stops the app from retrying; the first successful API call clears the
   banner.
 
-**States:** `ok` (normal), `maintenance` (planned window — set `until` + `message`), `outage` (unplanned —
-set `state:"outage"`, investigate, flip back to `ok` once `/api/health` is healthy).
+**States:** `ok` (normal), `maintenance` (planned window — set `until`), `outage` (unplanned —
+set `state:"outage"`, investigate, flip back to `ok` once `/api/health` is healthy). The banner wording for
+each state is built in to the app; you set only `state` (and optionally `until`).
 
 ## Hosting notes
 

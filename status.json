@@ -1,12 +1,8 @@
 {
   "schema": 1,
   "state": "ok",
-  "updatedAt": "2026-11-15T00:00:00Z",
+  "updatedAt": "2026-11-16T00:00:00Z",
   "until": null,
-  "message": {
-    "en": "",
-    "ru": ""
-  },
   "minAppVersion": {
     "android": "1.0.0",
     "ios": "0.1.0"

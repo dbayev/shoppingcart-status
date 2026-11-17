@@ -3,10 +3,6 @@
   "state": "maintenance",
   "updatedAt": "2026-11-15T10:00:00Z",
   "until": "2026-11-15T11:30:00Z",
-  "message": {
-    "en": "Scheduled maintenance, back by 3:30 AM PT.",
-    "ru": "Плановые работы, вернёмся к 3:30 по тихоокеанскому времени."
-  },
   "minAppVersion": {
     "android": "1.0.0",
     "ios": "1.0.0"
