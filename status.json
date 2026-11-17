@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "state": "ok",
-  "updatedAt": "2026-11-17T04:26:32Z",
-  "until": null,
+  "state": "maintenance",
+  "updatedAt": "2026-11-17T04:48:23Z",
+  "until": "2026-11-17T05:12:00Z",
   "minAppVersion": {
     "android": "1.0.0",
     "ios": "0.1.0"
